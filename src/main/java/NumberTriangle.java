@@ -101,6 +101,9 @@ public class NumberTriangle {
             return left.retrieve(rest);
         } else if (first == 'r' && right != null) {
             return right.retrieve(rest);
+        } else {
+            throw new IllegalArgumentException("Invalid path");
+        }
     }
 
     /** Read in the NumberTriangle structure from a file.
