@@ -137,7 +137,7 @@ public class NumberTriangle {
         }
         br.close();
 
-        for (int i = 0; i < triangle.size(); i++) {
+        for (int i = 0; i < triangle.size() - 1; i++) {
             List<NumberTriangle> current = triangle.get(i);
             List<NumberTriangle> next = triangle.get(i + 1);
             for (int j = 0; j < current.size(); j++) {
