@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the provided NumberTriangle class to be used in this coding task.
@@ -109,25 +111,45 @@ public class NumberTriangle {
         InputStream inputStream = NumberTriangle.class.getClassLoader().getResourceAsStream(fname);
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
-
         // TODO define any variables that you want to use to store things
 
         // will need to return the top of the NumberTriangle,
         // so might want a variable for that.
         NumberTriangle top = null;
-
+        //declare a List of NumberTriangle objects to hold the current row
+        List<List<NumberTriangle>> triangle = new ArrayList<>();
         String line = br.readLine();
         while (line != null) {
 
-            // remove when done; this line is included so running starter code prints the contents of the file
-            System.out.println(line);
+            line = line.trim();
+            if (!line.isEmpty()) {
+                String[] nums = line.split("\\s+");
+                List<NumberTriangle> row = new ArrayList<>();
 
-            // TODO process the line
+                for (String n : nums) {
+                    int value = Integer.parseInt(n);
+                    row.add(new NumberTriangle(value));
+                }
 
-            //read the next line
+                triangle.add(row);
+            }
             line = br.readLine();
         }
         br.close();
+
+        for (int i = 0; i < triangle.size(); i++) {
+            List<NumberTriangle> current = triangle.get(i);
+            List<NumberTriangle> next = triangle.get(i + 1);
+            for (int j = 0; j < current.size(); j++) {
+                NumberTriangle parent = current.get(j);
+                NumberTriangle leftChild = next.get(j);
+                NumberTriangle rightChild = next.get(j + 1);
+                parent.setLeft(leftChild);
+                parent.setRight(rightChild);
+            }
+
+        }
+        top = triangle.get(0).get(0);
         return top;
     }
 
